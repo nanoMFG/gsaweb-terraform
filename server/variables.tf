@@ -1,33 +1,17 @@
-variable "aws_region" {
-default = "us-west-2"
+variable "create_dns_zone" {
+  description = "If true, create new route53 zone, if false read existing route53 zone"
+  type        = bool
+  default     = false
 }
-variable "backend_bucket"   { 
-    default = "my-terraform-state" 
+variable "domain" {
+  description = "Domain for website"
+  type        = string
 }
-#
-variable "website_name" {
-default = "gsaweb"
+variable "name" {
+  description = "Project name"
+  type        = string
 }
-variable "website_domain" {
-default = "127.0.0.1"
-}
-variable "website_env" {
-default = "testing"
-}
-#
-
-variable "instance_type" {
-default = "t2.micro"
-}
-variable "profile_name" {
-default = "default"
-}
-variable "instance_key" {
-default = "gsakey"
-}
-variable "vpc_cidr" {
-default = "178.0.0.0/16"
-}
-variable "public_subnet_cidr" {
-default = "178.0.10.0/24"
+variable "env" {
+  description = "Project environment such as dev, staging, production"
+  type        = string
 }
