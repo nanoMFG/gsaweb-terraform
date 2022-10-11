@@ -26,3 +26,9 @@ default = "us-east-2a"
 variable "public_subnet_cidr" {
 default = "178.0.10.0/24"
 }
+variable "instance_type" {
+default = "t3-micro"
+}
+variable "instance_key" {
+  default = "gsaweb-key"
+}
