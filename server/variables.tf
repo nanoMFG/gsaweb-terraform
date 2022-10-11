@@ -32,3 +32,6 @@ default = "t3-micro"
 variable "instance_key" {
   default = "gsaweb-key"
 }
+variable "instance_ami" {
+  default = "ami-097a2df4ac947655f"
+}
