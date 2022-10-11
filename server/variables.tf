@@ -6,10 +6,12 @@ variable "create_dns_zone" {
 variable "domain" {
   description = "Domain for website"
   type        = string
+  default = "127.0.0.1"
 }
 variable "name" {
   description = "Project name"
   type        = string
+  default = "gsaweb"
 }
 variable "env" {
   description = "Project environment such as dev, staging, production"
