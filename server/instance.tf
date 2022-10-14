@@ -3,7 +3,7 @@ resource "aws_instance" "web" {
   instance_type   = var.instance_type
   key_name        = module.key_pair.key_pair_name
   subnet_id       = aws_subnet.public_subnet.id
-  security_groups = [aws_security_group.sg.id]
+  vpc_security_group_ids = [aws_security_group.sg.id]
 
   user_data = <<-EOF
   #!/bin/bash
