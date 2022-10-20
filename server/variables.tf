@@ -30,7 +30,13 @@ default = "178.0.10.0/24"
 }
 variable "aws_instance" {
   description = "If true, use plain aws_instance (EC2) resources directly."
+  type = bool
   default = true
+}
+variable "aws_auto_scaler" {
+  description = "IF true, negates aws_instance and deploys auto scaler instead"
+  type = bool
+  default = false
 }
 variable "instance_type" {
 default = "t3-micro"
