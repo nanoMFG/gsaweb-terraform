@@ -47,3 +47,7 @@ variable "instance_key" {
 variable "instance_ami" {
   default = "ami-097a2df4ac947655f"
 }
+variable "aws_load_balancer" {
+  default = false
+  type = bool
+}
