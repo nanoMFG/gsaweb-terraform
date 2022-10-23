@@ -1,4 +1,4 @@
-resource "aws_instance" "web" {
+resource "aws_instance" "instance" {
   ami             = var.instance_ami
   instance_type   = var.instance_type
   key_name        = module.key_pair.key_pair_name
