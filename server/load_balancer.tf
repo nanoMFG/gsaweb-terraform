@@ -1,11 +1,25 @@
+#############################################################################
+# Inputs(/Deps):
+#   - app_vpc.id
+#   - aws_subnet.public_subnet.id
+#   - aws_security_group.sg.id
+# ToDo:
+#   - Make subnet and sg defs define lists
+#   - Decide if we need multiple subnets
+#############################################################################
+resource "aws_lb" "load_balancer" {
+  count = var.aws_load_balancer ? 1 : 0
+  name               = "web-app-lb"
+  load_balancer_type = "application"
+  subnets            = [aws_subnet.public_subnet.id]
+  security_groups    = [aws_security_group.sg.id]
+}
+
 resource "aws_lb_listener" "http_listner" {
   count = var.aws_load_balancer ? 1 : 0
-  load_balancer_arn = aws_lb.load_balancer.arn
-
+  load_balancer_arn = aws_lb.load_balancer[0].arn
   port = 80
-
   protocol = "HTTP"
-
   # By default, return a simple 404 page
   default_action {
     type = "fixed-response"
@@ -19,6 +33,7 @@ resource "aws_lb_listener" "http_listner" {
 }
 
 resource "aws_lb_target_group" "instances" {
+  count = var.aws_load_balancer ? 1 : 0
   name     = "${var.name}_${var.env}_target_group"
   port     = 8080
   protocol = "HTTP"
@@ -36,7 +51,8 @@ resource "aws_lb_target_group" "instances" {
 }
 
 resource "aws_lb_listener_rule" "instances" {
-  listener_arn = aws_lb_listener.http_listner.arn
+  count = var.aws_load_balancer ? 1 : 0
+  listener_arn = aws_lb_listener.http_listner[0].arn
   priority     = 100
 
   condition {
@@ -47,6 +63,6 @@ resource "aws_lb_listener_rule" "instances" {
 
   action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.instances.arn
+    target_group_arn = aws_lb_target_group.instances[0].arn
   }
 }
