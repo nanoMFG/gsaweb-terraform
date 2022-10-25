@@ -13,6 +13,9 @@ resource "aws_lb" "load_balancer" {
   load_balancer_type = "application"
   subnets            = [aws_subnet.public_subnet.id]
   security_groups    = [aws_security_group.sg.id]
+  tags = {
+    Name = "${var.name}_${var.env}_load_balancer"
+  }
 }
 
 resource "aws_lb_listener" "http_listner" {
@@ -30,9 +33,12 @@ resource "aws_lb_listener" "http_listner" {
       status_code  = 404
     }
   }
+  tags = {
+    Name = "${var.name}_${var.env}_http_listner"
+  }
 }
 
-resource "aws_lb_target_group" "instances" {
+resource "aws_lb_target_group" "instances_group" {
   count = var.aws_load_balancer ? 1 : 0
   name     = "${var.name}_${var.env}_target_group"
   port     = 8080
@@ -48,9 +54,12 @@ resource "aws_lb_target_group" "instances" {
     healthy_threshold   = 2
     unhealthy_threshold = 2
   }
+  tags = {
+    Name = "${var.name}_${var.env}_instances_group"
+  }
 }
 
-resource "aws_lb_listener_rule" "instances" {
+resource "aws_lb_listener_rule" "instances_rule" {
   count = var.aws_load_balancer ? 1 : 0
   listener_arn = aws_lb_listener.http_listner[0].arn
   priority     = 100
@@ -63,6 +72,10 @@ resource "aws_lb_listener_rule" "instances" {
 
   action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.instances[0].arn
+    target_group_arn = aws_lb_target_group.instances_group[0].arn
+  }
+  
+  tags = {
+    Name = "${var.name}_${var.env}_instances_rule"
   }
 }
