@@ -36,4 +36,7 @@
 #   lifecycle {
 #     create_before_destroy = true
 #   }
+   # tags = {
+    # Name = "${var.name}_${var.env}_web_instance"
+  # }
 # }
