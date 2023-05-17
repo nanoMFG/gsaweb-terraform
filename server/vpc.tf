@@ -1,10 +1,3 @@
-# locals {
-#   app_vpc_name = "" 
-#   igw_name = ""
-#   public_subnet_name = ""
-#   public_rt_name = ""
-# }
-#Create a VPC
 resource "aws_vpc" "app_vpc" {
   cidr_block = var.vpc_cidr
 

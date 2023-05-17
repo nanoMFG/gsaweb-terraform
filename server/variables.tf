@@ -51,3 +51,7 @@ variable "aws_load_balancer" {
   default = false
   type = bool
 }
+variable "route53_zone_id" {
+  description = "The ID of the existing Route53 hosted zone"
+  type        = string
+}

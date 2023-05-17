@@ -1,0 +1,37 @@
+# Ignore Terraform lock file
+*.tfstate.lock*
+
+# Ignore Terraform plan output
+*.tfplan
+*.tfplan.backup
+
+# Ignore Terraform state files
+*.tfstate
+*.tfstate.backup
+
+# Ignore Terraform override files
+*_override.tf
+*_override.tf.json
+
+# Ignore Terraform provider plugins
+.terraform/
+
+# Ignore Terraform crash logs
+crash.log
+
+# Ignore any sensitive files containing credentials, secret keys, or personal information
+*.pem
+*.key
+*.pub
+*.crt
+*.env
+*.secret
+secrets.tfvars
+
+# Ignore editor and operating system files
+*~
+*.swp
+*.swo
+*.bak
+.DS_Store
+.vscode/

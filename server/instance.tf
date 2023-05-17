@@ -1,24 +1,32 @@
-resource "aws_instance" "instance" {
-  ami             = var.instance_ami
-  instance_type   = var.instance_type
-  key_name        = module.key_pair.key_pair_name
-  subnet_id       = aws_subnet.public_subnet.id
-  vpc_security_group_ids = [aws_security_group.sg.id]
-  count = var.aws_instance ? 1 : 0
+resource "aws_key_pair" "instance_key" {
+  key_name   = var.instance_key
+  public_key = file("${var.instance_key}.pub")
+}
+
+resource "aws_instance" "web" {
+  ami           = var.instance_ami
+  instance_type = var.instance_type
+  key_name      = aws_key_pair.instance_key.key_name
+
+  vpc_security_group_ids = [aws_security_group.web_sg.id]
+  subnet_id              = aws_subnet.public_subnet.id
 
   user_data = <<-EOF
-  #!/bin/bash
-  echo "*** Installing apache2"
-  sudo apt update -y
-  sudo apt install apache2 -y
-  echo "*** Completed Installing apache2"
-  EOF
-
-  tags = {
-    Name = "${var.name}_${var.env}_web_instance"
-  }
-
-  volume_tags = {
-    Name = "${var.name}_${var.env}_web_instance"
-  } 
+              #!/bin/bash
+              sudo yum update -y
+              sudo yum install -y httpd
+              sudo systemctl start httpd
+              sudo systemctl enable httpd
+              sudo yum install -y git
+              curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+              . ~/.nvm/nvm.sh
+              nvm install node
+              git clone https://github.com/nanoMFG/gsa-webapp-frontend-c3ai.git
+              cd your-react-repo
+              npm install
+              npm run build
+              sudo cp -r build/* /var/www/html
+              sudo chown -R apache:apache /var/www/html
+              sudo systemctl restart httpd
+              EOF
 }
