@@ -55,3 +55,8 @@ variable "route53_zone_id" {
   description = "The ID of the existing Route53 hosted zone"
   type        = string
 }
+variable "use_existing_route53_zone" {
+  description = "If true, use an existing Route53 zone for the environment, if false, do not use it"
+  type        = bool
+  default     = false
+}
