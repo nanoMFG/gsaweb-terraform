@@ -1,17 +1,7 @@
-module "key_pair" {
-  source = "terraform-aws-modules/key-pair/aws"
-  
-  key_name   = var.key_pair_name
-  public_key = file(var.public_key_path)
-  save_private_key = true
-  private_key_extension = ".pem"
-  private_key_path = "./"
-}
-
 resource "aws_instance" "web" {
   ami           = var.instance_ami
   instance_type = var.instance_type
-  key_name      = module.key_pair.key_pair_key_name
+  key_name      = aws_key_pair.generated_key.key_name
 
   vpc_security_group_ids = [aws_security_group.web_sg.id]
   subnet_id              = aws_subnet.public_subnet.id

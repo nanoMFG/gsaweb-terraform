@@ -7,18 +7,6 @@ variable "env" {
   description = "Project environment such as dev, staging, production"
   type        = string
 }
-# SSh key
-variable "key_pair_name" {
-  description = "Name of the key pair"
-  type        = string
-  default     = "mykey"
-}
-
-variable "public_key_path" {
-  description = "Path to the public key file"
-  type        = string
-  default     = "mykey.pub"
-}
 # DNS
 variable "create_dns_zone" {
   description = "If true, create new route53 zone, if false read existing route53 zone"
