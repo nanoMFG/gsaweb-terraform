@@ -36,26 +36,25 @@ resource "aws_instance" "web" {
 
   vpc_security_group_ids = [aws_security_group.web_sg.id]
   subnet_id              = aws_subnet.public_subnet.id
-
   user_data = <<-EOF
               #!/bin/bash
               sudo systemctl status snap.amazon-ssm-agent.amazon-ssm-agent.service
-              sudo yum update -y
-              sudo yum install -y httpd
-              sudo systemctl start httpd
-              sudo systemctl enable httpd
-              sudo yum install -y git
+              sudo apt-get update -y
+              sudo apt-get install -y apache2
+              sudo systemctl start apache2
+              sudo systemctl enable apache2
+              sudo apt-get install -y git
               curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
               . ~/.nvm/nvm.sh
               nvm install node
               git clone https://github.com/nanoMFG/gsa-webapp-frontend-c3ai.git
-              cd your-react-repo
+              cd gsa-webapp-frontend-c3ai
               npm install
               npm run build
-              sudo cp -r build/* /var/www/html
-              sudo chown -R apache:apache /var/www/html
-              sudo systemctl restart httpd
-              EOF
+              sudo cp -r build/* /var/www/html/
+              sudo chown -R www-data:www-data /var/www/html/
+              sudo systemctl restart apache2
+            EOF
 
    tags = {
     Name = "${var.name}_${var.env}_web_instance"
