@@ -51,6 +51,7 @@ resource "aws_instance" "web" {
               cd gsa-webapp-frontend-c3ai
               npm install
               npm run build
+              sudo rm /var/www/html/index.html
               sudo cp -r build/* /var/www/html/
               sudo chown -R www-data:www-data /var/www/html/
               sudo systemctl restart apache2
