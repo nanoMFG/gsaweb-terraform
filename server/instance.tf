@@ -1,7 +1,38 @@
+resource "aws_iam_instance_profile" "ssm" {
+  name = "ssm"
+  role = aws_iam_role.ssm.name
+}
+
+resource "aws_iam_role" "ssm" {
+  name = "ssm"
+
+  assume_role_policy = <<EOF
+  {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Action": "sts:AssumeRole",
+        "Principal": {
+          "Service": "ec2.amazonaws.com"
+        },
+        "Effect": "Allow",
+        "Sid": ""
+      }
+    ]
+  }
+  EOF
+}
+
+resource "aws_iam_role_policy_attachment" "ssm" {
+  role       = aws_iam_role.ssm.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+}
+
 resource "aws_instance" "web" {
   ami           = var.instance_ami
   instance_type = var.instance_type
-  key_name      = aws_key_pair.generated_key.key_name
+  # key_name      = aws_key_pair.generated_key.key_name
+  iam_instance_profile   = aws_iam_instance_profile.ssm.name
 
   vpc_security_group_ids = [aws_security_group.web_sg.id]
   subnet_id              = aws_subnet.public_subnet.id
