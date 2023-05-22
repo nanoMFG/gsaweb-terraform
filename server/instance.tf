@@ -31,7 +31,7 @@ resource "aws_iam_role_policy_attachment" "ssm" {
 resource "aws_instance" "web" {
   ami           = var.instance_ami
   instance_type = var.instance_type
-  # key_name      = aws_key_pair.generated_key.key_name
+  key_name               = aws_key_pair.deployer.key_name
   iam_instance_profile   = aws_iam_instance_profile.ssm.name
 
   vpc_security_group_ids = [aws_security_group.web_sg.id]
@@ -56,4 +56,13 @@ resource "aws_instance" "web" {
               sudo chown -R apache:apache /var/www/html
               sudo systemctl restart httpd
               EOF
+
+   tags = {
+    Name = "${var.name}_${var.env}_web_instance"
+  }
+
+  volume_tags = {
+    Name = "${var.name}_${var.env}_web_instance"
+  } 
+
 }
