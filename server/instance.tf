@@ -39,23 +39,23 @@ resource "aws_instance" "web" {
   user_data = <<-EOF
               #!/bin/bash
               sudo systemctl status snap.amazon-ssm-agent.amazon-ssm-agent.service
-              sudo apt-get update -y
-              sudo apt-get install -y apache2
+              sudo apt update -y
+              sudo apt install -y apache2
               sudo systemctl start apache2
               sudo systemctl enable apache2
-              sudo apt-get install -y git
+              sudo apt install -y git
+              touch ~/.bashrc
               curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
-              . ~/.nvm/nvm.sh
+              source ~/.nvm/nvm.sh
               nvm install node
               git clone https://github.com/nanoMFG/gsa-webapp-frontend-c3ai.git
               cd gsa-webapp-frontend-c3ai
               npm install
               npm run build
-              sudo rm /var/www/html/index.html
-              sudo cp -r build/* /var/www/html/
-              sudo chown -R www-data:www-data /var/www/html/
+              sudo cp -r build/* /var/www/html
+              sudo chown -R www-data:www-data /var/www/html
               sudo systemctl restart apache2
-            EOF
+              EOF
 
    tags = {
     Name = "${var.name}_${var.env}_web_instance"
