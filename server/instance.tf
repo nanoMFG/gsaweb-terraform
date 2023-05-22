@@ -39,6 +39,7 @@ resource "aws_instance" "web" {
 
   user_data = <<-EOF
               #!/bin/bash
+              sudo systemctl status snap.amazon-ssm-agent.amazon-ssm-agent.service
               sudo yum update -y
               sudo yum install -y httpd
               sudo systemctl start httpd
