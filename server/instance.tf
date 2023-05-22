@@ -44,9 +44,11 @@ resource "aws_instance" "web" {
               sudo systemctl start apache2
               sudo systemctl enable apache2
               sudo apt install -y git
-              touch ~/.bashrc
+              echo "Creating .bashrc for root"
+              touch /root/.bashrc
               curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
-              source ~/.nvm/nvm.sh
+              echo "Sourcing NVM script"
+              source /root/.nvm/nvm.sh
               nvm install node
               git clone https://github.com/nanoMFG/gsa-webapp-frontend-c3ai.git
               cd gsa-webapp-frontend-c3ai
