@@ -1,5 +1,5 @@
 resource "aws_elb" "webelb" {
-  name               = "${var.name}-elb"
+  name               = "${var.name}-${var.env}-elb"
   subnets            = [aws_subnet.public_subnet.id]
   #availability_zones = var.availability_zones
 
