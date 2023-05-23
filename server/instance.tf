@@ -47,8 +47,12 @@ resource "aws_instance" "web" {
               echo "Creating .bashrc for root"
               touch /root/.bashrc
               curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
-              echo "Sourcing NVM script"
-              source /root/.nvm/nvm.sh
+              echo "Waiting for NVM installation to finish..."
+              sleep 10
+              export NVM_DIR="$HOME/.nvm"
+              export NODE_OPTIONS="--max-old-space-size=4096 --openssl-legacy-provider"
+              [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+              [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
               nvm install node
               git clone https://github.com/nanoMFG/gsa-webapp-frontend-c3ai.git
               cd gsa-webapp-frontend-c3ai
@@ -58,6 +62,7 @@ resource "aws_instance" "web" {
               sudo chown -R www-data:www-data /var/www/html
               sudo systemctl restart apache2
               EOF
+
 
    tags = {
     Name = "${var.name}_${var.env}_web_instance"
