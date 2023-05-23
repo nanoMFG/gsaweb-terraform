@@ -10,12 +10,12 @@ resource "aws_route53_record" "www" {
   type    = "A"
 
   alias {
-    name                   = aws_elb.example.dns_name
+    name                   = aws_elb.web-elb.dns_name
     zone_id                = aws_elb.example.zone_id
     evaluate_target_health = true
   }
 
-  zone_id = data.aws_route53_zone.existing_zone[0].zone_id
+  zone_id = data.aws_route53_zone.existing_zone.zone_id
   
   tags = {
     Name        = "${var.name}_${var.env}_dns_record"
