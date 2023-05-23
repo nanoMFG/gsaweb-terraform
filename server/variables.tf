@@ -31,7 +31,7 @@ default = "178.0.10.0/24"
 variable "availability_zones" {
   description = "List of availability zones to be used"
   type        = list(string)
-  default     = ["us-west-2a", "us-west-2b", "us-west-2c"]
+  default     = ["us-east-2c"]
 }
 variable "aws_instance" {
   description = "If true, use plain aws_instance (EC2) resources directly."
