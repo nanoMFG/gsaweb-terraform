@@ -1,4 +1,4 @@
-resource "aws_elb" "web-elb" {
+resource "aws_elb" "webelb" {
   name               = "${var.name}_elb"
   availability_zones = var.availability_zones
 

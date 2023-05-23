@@ -8,7 +8,7 @@ output "instance_id" {
 }
 output "lb_dns_name" {
   description = "The DNS name of the load balancer"
-  value       = aws_elb.web-elb.dns_name
+  value       = aws_elb.webelb.dns_name
 }
 
 output "certificate_arn" {
