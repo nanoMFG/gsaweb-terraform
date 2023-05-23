@@ -3,7 +3,7 @@ data "aws_route53_zone" "existing_zone" {
 }
 
 locals {
-  route53_zone_id = var.use_existing_route53_zone ? data.aws_route53_zone.existing_zone[0].zone_id : ""
+  route53_zone_id = var.use_existing_route53_zone ? data.aws_route53_zone.existing_zone.zone_id : ""
 }
 resource "aws_route53_record" "www" {
   name    = var.env == "production" ? var.domain_name : "${var.env}.${var.domain_name}"
@@ -39,7 +39,7 @@ resource "aws_acm_certificate" "cert" {
 resource "aws_route53_record" "cert_validation" {
   name    = aws_acm_certificate.cert.domain_validation_options[0].resource_record_name
   type    = aws_acm_certificate.cert.domain_validation_options[0].resource_record_type
-  zone_id = data.aws_route53_zone.existing_zone[0].zone_id
+  zone_id = data.aws_route53_zone.existing_zone.zone_id
   records = [aws_acm_certificate.cert.domain_validation_options[0].resource_record_value]
   ttl     = 60
 }

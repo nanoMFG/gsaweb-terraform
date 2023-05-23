@@ -17,7 +17,7 @@ resource "aws_elb" "web-elb" {
     ssl_certificate_id = aws_acm_certificate.cert.arn
   }
 
-  instances = [aws_instance.example.id]
+  instances = [aws_instance.web.id]
 
   health_check {
     healthy_threshold   = 2
