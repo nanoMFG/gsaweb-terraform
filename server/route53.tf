@@ -15,16 +15,6 @@ resource "aws_route53_record" "www" {
   zone_id = data.aws_route53_zone.existing_zone.zone_id  
 }
 
-resource "aws_route53_tags" "existing_zone_tags" {
-  zone_id = data.aws_route53_zone.existing_zone.zone_id
-
-  tags = {
-    Name        = "${var.name}_${var.env}_zone"
-    Environment = var.env
-  }
-}
-
-
 resource "aws_acm_certificate" "cert" {
   domain_name       = "*.${var.domain_name}"
   validation_method = "DNS"
