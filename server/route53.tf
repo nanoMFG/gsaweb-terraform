@@ -1,10 +1,7 @@
 data "aws_route53_zone" "existing_zone" {
   zone_id = var.route53_zone_id
 }
-
-locals {
-  route53_zone_id = var.use_existing_route53_zone ? data.aws_route53_zone.existing_zone.zone_id : ""
-}
+ 
 resource "aws_route53_record" "www" {
   name    = var.env == "production" ? var.domain_name : "${var.env}.${var.domain_name}"
   type    = "A"
@@ -15,13 +12,19 @@ resource "aws_route53_record" "www" {
     evaluate_target_health = true
   }
 
+  zone_id = data.aws_route53_zone.existing_zone.zone_id  
+}
+
+resource "aws_route53_tags" "existing_zone_tags" {
   zone_id = data.aws_route53_zone.existing_zone.zone_id
-  
+
   tags = {
-    Name        = "${var.name}_${var.env}_dns_record"
+    Name        = "${var.name}_${var.env}_zone"
     Environment = var.env
   }
 }
+
+
 resource "aws_acm_certificate" "cert" {
   domain_name       = "*.${var.domain_name}"
   validation_method = "DNS"
