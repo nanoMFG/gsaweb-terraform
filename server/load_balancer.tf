@@ -1,5 +1,5 @@
 resource "aws_elb" "webelb" {
-  name               = "${var.name}_elb"
+  name               = "${var.name}-elb"
   availability_zones = var.availability_zones
 
   listener {
