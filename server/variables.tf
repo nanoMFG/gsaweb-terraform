@@ -13,7 +13,7 @@ variable "create_dns_zone" {
   type        = bool
   default     = false
 }
-variable "domain" {
+variable "domain_name" {
   description = "Domain for website"
   type        = string
   default = "127.0.0.1"
@@ -27,6 +27,11 @@ default = "us-east-2a"
 }
 variable "public_subnet_cidr" {
 default = "178.0.10.0/24"
+}
+variable "availability_zones" {
+  description = "List of availability zones to be used"
+  type        = list(string)
+  default     = ["us-west-2a", "us-west-2b", "us-west-2c"]
 }
 variable "aws_instance" {
   description = "If true, use plain aws_instance (EC2) resources directly."
