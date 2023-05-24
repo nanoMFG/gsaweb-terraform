@@ -35,7 +35,8 @@ resource "aws_instance" "web" {
   iam_instance_profile   = aws_iam_instance_profile.ssm.name
 
   vpc_security_group_ids = [aws_security_group.web_sg.id]
-  subnet_id              = aws_subnet.public_subnet.id
+  #subnet_id              = aws_subnet.public_subnet.id
+  subnet_id = aws_subnet.private_subnet.id
   user_data = <<-EOF
               #!/bin/bash
               sudo systemctl status snap.amazon-ssm-agent.amazon-ssm-agent.service

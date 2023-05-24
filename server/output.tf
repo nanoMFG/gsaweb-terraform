@@ -6,11 +6,10 @@ output "instance_id" {
   description = "The ID of the created instance"
   value       = aws_instance.web.id
 }
-output "lb_dns_name" {
-  description = "The DNS name of the load balancer"
-  value       = aws_elb.webelb.dns_name
+output "alb_dns_name" {
+  description = "The DNS name of the ALB"
+  value       = aws_lb.web.dns_name
 }
-
 output "certificate_arn" {
   description = "The ARN of the certificate"
   value       = aws_acm_certificate.cert.arn

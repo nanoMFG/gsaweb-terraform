@@ -1,19 +1,20 @@
 data "aws_route53_zone" "existing_zone" {
   zone_id = var.route53_zone_id
 }
- 
+
 resource "aws_route53_record" "www" {
   name    = var.env == "production" ? var.domain_name : "${var.env}.${var.domain_name}"
   type    = "A"
 
   alias {
-    name                   = aws_elb.webelb.dns_name
-    zone_id                = aws_elb.webelb.zone_id
+    name                   = aws_lb.web.dns_name
+    zone_id                = aws_lb.web.zone_id
     evaluate_target_health = true
   }
 
   zone_id = data.aws_route53_zone.existing_zone.zone_id  
 }
+
 
 resource "aws_acm_certificate" "cert" {
   domain_name       = "*.${var.domain_name}"
