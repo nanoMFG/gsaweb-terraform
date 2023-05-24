@@ -22,22 +22,26 @@ variable "domain_name" {
 variable "vpc_cidr" {
 default = "178.0.0.0/16"
 }
-variable "subnet_zone" {
-default = "us-east-2a"
-}
-variable "public_subnet_cidr" {
-  description = "CIDR block for the public subnet"
-  default = "178.0.10.0/24"
-}
+# variable "subnet_zone" {
+# default = "us-east-2a"
+# }
+# variable "public_subnet_cidr" {
+#   description = "CIDR block for the public subnet"
+#   default = "178.0.10.0/24"
+# }
 variable "private_subnet_cidr" {
   description = "CIDR block for the private subnet"
-  default     = "178.0.20.0/24"
+  default     = "178.0.10.0/24"
 }
-
 variable "availability_zones" {
   description = "List of availability zones to be used"
   type        = list(string)
-  default     = ["us-east-2c"]
+  default     = ["us-east-2c", "us-east-2b"]
+}
+variable "public_subnet_cidrs" {
+  description = "CIDR blocks for the public subnets"
+  type        = list(string)
+  default     = ["178.0.20.0/24", "178.0.30.0/24"]
 }
 variable "aws_instance" {
   description = "If true, use plain aws_instance (EC2) resources directly."
@@ -64,8 +68,8 @@ variable "route53_zone_id" {
   type        = string
   default     = "dummy"
 }
-variable "use_existing_route53_zone" {
-  description = "If true, use an existing Route53 zone for the environment, if false, do not use it"
-  type        = bool
-  default     = false
-}
+# variable "use_existing_route53_zone" {
+#   description = "If true, use an existing Route53 zone for the environment, if false, do not use it"
+#   type        = bool
+#   default     = false
+# }
