@@ -26,8 +26,14 @@ variable "subnet_zone" {
 default = "us-east-2a"
 }
 variable "public_subnet_cidr" {
-default = "178.0.10.0/24"
+  description = "CIDR block for the public subnet"
+  default = "178.0.10.0/24"
 }
+variable "private_subnet_cidr" {
+  description = "CIDR block for the private subnet"
+  default     = "178.0.20.0/24"
+}
+
 variable "availability_zones" {
   description = "List of availability zones to be used"
   type        = list(string)
