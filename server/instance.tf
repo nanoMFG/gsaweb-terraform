@@ -37,8 +37,16 @@ resource "aws_instance" "web" {
   vpc_security_group_ids = [aws_security_group.web_sg.id]
   #subnet_id              = aws_subnet.public_subnet.id
   subnet_id = aws_subnet.private_subnet.id
+  depends_on = [aws_nat_gateway.nat]
   user_data = <<-EOF
               #!/bin/bash
+              
+              # Retry until we can successfully make a request to the internet
+              until curl -sfI https://www.google.com; do
+                  echo "Waiting for internet connectivity..."
+                  sleep 5
+              done
+              
               sudo systemctl status snap.amazon-ssm-agent.amazon-ssm-agent.service
               sudo apt update -y
               sudo apt install -y apache2
@@ -63,7 +71,6 @@ resource "aws_instance" "web" {
               sudo chown -R www-data:www-data /var/www/html
               sudo systemctl restart apache2
               EOF
-
 
    tags = {
     Name = "${var.name}_${var.env}_web_instance"
