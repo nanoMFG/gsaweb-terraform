@@ -31,7 +31,7 @@ resource "aws_iam_role_policy_attachment" "ssm" {
 resource "aws_instance" "web" {
   ami           = var.instance_ami
   instance_type = var.instance_type
-  key_name               = aws_key_pair.deployer.key_name
+  # key_name               = aws_key_pair.deployer.key_name
   iam_instance_profile   = aws_iam_instance_profile.ssm.name
 
   vpc_security_group_ids = [aws_security_group.web_sg.id]

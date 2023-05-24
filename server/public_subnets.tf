@@ -1,17 +1,3 @@
-# resource "aws_subnet" "public_subnet" {
-#   vpc_id            = aws_vpc.app_vpc.id
-#   cidr_block        = var.public_subnet_cidr
-#   map_public_ip_on_launch = true
-#   availability_zone = var.subnet_zone
-
-#   tags = {
-#     Name = "${var.name}_${var.env}_public-subnet"
-#   }
-# }
-# resource "aws_route_table_association" "public_rt_asso" {
-#   subnet_id      = aws_subnet.public_subnet.id
-#   route_table_id = aws_route_table.public_rt.id
-# }
 resource "aws_subnet" "public_subnet" {
   count             = length(var.availability_zones)
   vpc_id            = aws_vpc.app_vpc.id
