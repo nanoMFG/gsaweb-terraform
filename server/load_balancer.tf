@@ -14,9 +14,14 @@ resource "aws_lb" "web" {
   }
 }
 
+# Resources to enable cognito login for dev environment
+
+data "aws_caller_identity" "current" {}
+
 resource "aws_cognito_user_pool" "pool" {
   count = var.env == "dev" ? 1 : 0
   name = "${var.name}-${var.env}-user-pool"
+  generate_secret = true
 
   # Add other configurations here
 }
@@ -35,6 +40,7 @@ resource "aws_cognito_user_pool_domain" "domain" {
 }
 
 resource "aws_lb_listener" "front_end" {
+  count             = var.env == "dev" ? 0 : 1
   load_balancer_arn = aws_lb.web.arn
   port              = "443"
   protocol          = "HTTPS"
@@ -58,6 +64,30 @@ resource "aws_lb_listener" "front_end" {
     }
   }
 
+}
+
+# This resource is created when var.env is "dev"
+resource "aws_lb_listener" "front_end_auth" {
+  count             = var.env == "dev" ? 1 : 0
+  load_balancer_arn = aws_lb.web.arn
+  port              = "443"
+  protocol          = "HTTPS"
+  certificate_arn   = aws_acm_certificate.cert.arn
+
+  default_action {
+    type = "authenticate-cognito"
+    authenticate_cognito {
+      user_pool_arn       = aws_cognito_user_pool.pool[0].arn
+      user_pool_client_id = aws_cognito_user_pool_client.client[0].id
+      user_pool_domain    = aws_cognito_user_pool_domain.domain[0].domain
+    }
+  }
+
+  default_action {
+    order            = 100
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.web.arn
+  }
 }
 
 resource "aws_lb_target_group" "web" {
