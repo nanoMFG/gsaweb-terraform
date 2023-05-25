@@ -12,9 +12,20 @@ resource "aws_s3_bucket" "ansible_bucket" {
   }
 }
 
+resource "aws_s3_bucket_ownership_controls" "ansible_bucket_ownership_controls" {
+  bucket = aws_s3_bucket.ansible_bucket.id
+
+  rule {
+    object_ownership = "ObjectWriter"
+  }
+}
+
 resource "aws_s3_bucket_acl" "ansible_bucket_acl" {
   bucket = aws_s3_bucket.ansible_bucket.id
   acl    = "private"
+  depends_on = [
+    aws_s3_bucket_ownership_controls.ansible_bucket_ownership_controls
+  ]
 }
 
 resource "aws_s3_bucket_versioning" "ansible_bucket_versioning" {
