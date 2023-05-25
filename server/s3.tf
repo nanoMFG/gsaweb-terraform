@@ -18,6 +18,7 @@ resource "aws_s3_bucket_acl" "ansible_bucket_acl" {
 
 resource "aws_s3_bucket_versioning" "ansible_bucket_versioning" {
   bucket = aws_s3_bucket.ansible_bucket.id
-  
-  status = "Suspended"
+  versioning_configuration {
+    status = "Disabled"
+  }
 }
