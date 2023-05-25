@@ -1,38 +1,4 @@
-# resource "aws_elb" "webelb" {
-#   name               = "${var.name}-${var.env}-elb"
-#   subnets            = [aws_subnet.public_subnet.id]
-#   #availability_zones = var.availability_zones
 
-#   listener {
-#     instance_port      = 80
-#     instance_protocol  = "http"
-#     lb_port            = 80
-#     lb_protocol        = "http"
-#   }
-
-#   listener {
-#     instance_port      = 80
-#     instance_protocol  = "http"
-#     lb_port            = 443
-#     lb_protocol        = "https"
-#     ssl_certificate_id = aws_acm_certificate.cert.arn
-#   }
-
-#   instances = [aws_instance.web.id]
-
-#   health_check {
-#     healthy_threshold   = 2
-#     unhealthy_threshold = 2
-#     timeout             = 3
-#     target              = "HTTP:80/"
-#     interval            = 30
-#   }
-
-#   tags = {
-#     Name        = "${var.name}_${var.env}_elb"
-#     Environment = var.env
-#   }
-# }
 resource "aws_lb" "web" {
   name               = "${var.name}-${var.env}-alb"
   internal           = false
@@ -48,6 +14,26 @@ resource "aws_lb" "web" {
   }
 }
 
+resource "aws_cognito_user_pool" "pool" {
+  count = var.env == "dev" ? 1 : 0
+  name = "${var.name}-${var.env}-user-pool"
+
+  # Add other configurations here
+}
+resource "aws_cognito_user_pool_client" "client" {
+  count = var.env == "dev" ? 1 : 0
+  name = "${var.name}-${var.env}-user-pool-client"
+  user_pool_id = aws_cognito_user_pool.pool[0].id
+
+  # Add other configurations here
+}
+
+resource "aws_cognito_user_pool_domain" "domain" {
+  count = var.env == "dev" ? 1 : 0
+  domain = "${var.name}-${var.env}-user-pool-domain"
+  user_pool_id = aws_cognito_user_pool.pool[0].id
+}
+
 resource "aws_lb_listener" "front_end" {
   load_balancer_arn = aws_lb.web.arn
   port              = "443"
@@ -58,6 +44,19 @@ resource "aws_lb_listener" "front_end" {
     type = "forward"
     target_group_arn = aws_lb_target_group.web.arn
   }
+
+  dynamic "default_action" {
+    for_each = var.env == "dev" ? [1] : []
+    content {
+      type = "authenticate-cognito"
+      authenticate_cognito {
+        user_pool_arn       = aws_cognito_user_pool.pool[0].arn
+        user_pool_client_id = aws_cognito_user_pool_client.client[0].id
+        user_pool_domain    = aws_cognito_user_pool_domain.domain[0].domain
+      }
+    }
+  }
+  
 }
 
 resource "aws_lb_target_group" "web" {
