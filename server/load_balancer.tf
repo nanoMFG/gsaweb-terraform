@@ -41,6 +41,7 @@ resource "aws_lb_listener" "front_end" {
   certificate_arn   = aws_acm_certificate.cert.arn
 
   default_action {
+    order = 100
     type = "forward"
     target_group_arn = aws_lb_target_group.web.arn
   }
@@ -56,7 +57,7 @@ resource "aws_lb_listener" "front_end" {
       }
     }
   }
-  
+
 }
 
 resource "aws_lb_target_group" "web" {
