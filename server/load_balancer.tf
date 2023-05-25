@@ -35,6 +35,11 @@ resource "aws_cognito_user_pool_client" "client" {
   name         = "${var.name}-${var.env}-user-pool-client"
   user_pool_id = aws_cognito_user_pool.pool[0].id
   generate_secret = true
+  allowed_oauth_flows = ["client_credentials"]
+  allowed_oauth_scopes = ["openid"]
+  callback_urls = ["https://${var.env}.${var.domain_name}"] // Replace with your callback URL
+
+  allowed_oauth_flows_user_pool_client = true
 }
 
 # Creates a new Amazon Cognito User Pool Domain.
