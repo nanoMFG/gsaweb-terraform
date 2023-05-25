@@ -20,6 +20,6 @@ resource "aws_s3_bucket" "ansible_bucket" {
 resource "aws_s3_bucket_versioning" "ansible_bucket_versioning" {
   bucket = aws_s3_bucket.ansible_bucket.id
   versioning_configuration {
-    status = "Disabled"
+    status = "Enabled"
   }
 }
