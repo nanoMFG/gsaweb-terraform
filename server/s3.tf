@@ -1,6 +1,6 @@
 resource "aws_s3_bucket" "ansible_bucket" {
   bucket = "${var.name}-${var.env}-ansilbe-bucket"
-  acl = "private"
+#   acl = "private"
   
 #   lifecycle {
 #     prevent_destroy = true
@@ -12,10 +12,10 @@ resource "aws_s3_bucket" "ansible_bucket" {
   }
 }
 
-# resource "aws_s3_bucket_acl" "ansible_bucket_acl" {
-#   bucket = aws_s3_bucket.ansible_bucket.id
-#   acl    = "private"
-# }
+resource "aws_s3_bucket_acl" "ansible_bucket_acl" {
+  bucket = aws_s3_bucket.ansible_bucket.id
+  acl    = "private"
+}
 
 resource "aws_s3_bucket_versioning" "ansible_bucket_versioning" {
   bucket = aws_s3_bucket.ansible_bucket.id
