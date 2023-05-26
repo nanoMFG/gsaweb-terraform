@@ -79,6 +79,7 @@ resource "aws_lb_listener" "front_end_auth" {
   certificate_arn   = aws_acm_certificate.cert.arn
 
   default_action {
+    order = 1
     type = "authenticate-cognito"
     authenticate_cognito {
       user_pool_arn       = aws_cognito_user_pool.pool[0].arn
@@ -88,7 +89,7 @@ resource "aws_lb_listener" "front_end_auth" {
   }
 
   default_action {
-    order            = 100
+    order            = 2
     type             = "forward"
     target_group_arn = aws_lb_target_group.web.arn
   }
