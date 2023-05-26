@@ -78,15 +78,15 @@ resource "aws_lb_listener" "front_end_auth" {
   protocol          = "HTTPS"
   certificate_arn   = aws_acm_certificate.cert.arn
 
-  default_action {
-    order = 1
-    type = "authenticate-cognito"
-    authenticate_cognito {
-      user_pool_arn       = aws_cognito_user_pool.pool[0].arn
-      user_pool_client_id = aws_cognito_user_pool_client.client[0].id
-      user_pool_domain    = aws_cognito_user_pool_domain.domain[0].domain
-    }
-  }
+  # default_action {
+  #   order = 1
+  #   type = "authenticate-cognito"
+  #   authenticate_cognito {
+  #     user_pool_arn       = aws_cognito_user_pool.pool[0].arn
+  #     user_pool_client_id = aws_cognito_user_pool_client.client[0].id
+  #     user_pool_domain    = aws_cognito_user_pool_domain.domain[0].domain
+  #   }
+  # }
 
   default_action {
     order            = 2
