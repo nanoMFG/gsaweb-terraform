@@ -55,7 +55,7 @@ resource "aws_lb" "web" {
 # the load balancer routes requests. When a client sends a request to your 
 # load balancer, the listener routes the request to a registered target.
 resource "aws_lb_listener" "front_end" {
-  count             = var.env == "dev" ? 0 : 1
+  # count             = var.env == "dev" ? 0 : 1
   load_balancer_arn = aws_lb.web.arn
   port              = "443"
   protocol          = "HTTPS"
