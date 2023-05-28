@@ -14,6 +14,9 @@ output "certificate_arn" {
   description = "The ARN of the certificate"
   value       = aws_acm_certificate.cert.arn
 }
-output "s3_bucket_name" {
+output "ansible_bucket_name" {
   value = aws_s3_bucket.ansible_bucket.id
+}
+output "app_prefix" {
+  value = "${var.name}_${var.env}"
 }
