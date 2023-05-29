@@ -26,3 +26,7 @@ output "app_prefix" {
   description = "The prefix of the application. Used by ansible to target the correct instances."
   value = "${var.name}_${var.env}"
 }
+output "env" {
+  description = "The environment of the application."
+  value = var.env
+}
