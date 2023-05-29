@@ -12,7 +12,12 @@ variable "domain_name" {
   type        = string
   default = "127.0.0.1"
 }
-# VPC and Subnets
+# Region VPC, subnets and availability zones
+variable "aws_region" {
+  description = "AWS region"
+  type        = string
+  default     = "us-east-2"
+}
 variable "vpc_cidr" {
 default = "178.0.0.0/16"
 }
