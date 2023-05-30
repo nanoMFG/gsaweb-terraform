@@ -3,7 +3,7 @@ data "aws_route53_zone" "existing_zone" {
 }
 
 resource "aws_route53_record" "www" {
-  name    = var.env == "production" ? var.domain_name : "${var.env}.${var.domain_name}"
+  name    = var.env == "prod" ? var.domain_name : "${var.env}.${var.domain_name}"
   type    = "A"
 
   alias {

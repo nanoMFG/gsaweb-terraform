@@ -4,7 +4,7 @@ variable "name" {
   default = "gsaweb"
 }
 variable "env" {
-  description = "Project environment such as dev, staging, production"
+  description = "Project environment such as dev or prod"
   type        = string
 }
 variable "domain_name" {
