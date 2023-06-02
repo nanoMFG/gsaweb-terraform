@@ -14,22 +14,22 @@ resource "aws_lb" "web" {
   }
 }
 
-# Creates a new HTTPS listener for the ALB. This is where you define how 
-# the load balancer routes requests. When a client sends a request to your 
-# load balancer, the listener routes the request to a registered target.
-resource "aws_lb_listener" "front_end" {
-  # count             = var.env == "dev" ? 0 : 1
-  load_balancer_arn = aws_lb.web.arn
-  port              = "443"
-  protocol          = "HTTPS"
-  certificate_arn   = var.certificate_arn
+# # Creates a new HTTPS listener for the ALB. This is where you define how 
+# # the load balancer routes requests. When a client sends a request to your 
+# # load balancer, the listener routes the request to a registered target.
+# resource "aws_lb_listener" "front_end" {
+#   # count             = var.env == "dev" ? 0 : 1
+#   load_balancer_arn = aws_lb.web.arn
+#   port              = "443"
+#   protocol          = "HTTPS"
+#   certificate_arn   = var.certificate_arn
 
-  default_action {
-    order            = 100
-    type             = "forward"
-    target_group_arn = aws_lb_target_group.web.arn
-  }
-}
+#   default_action {
+#     order            = 100
+#     type             = "forward"
+#     target_group_arn = aws_lb_target_group.web.arn
+#   }
+# }
 
 # Creates a new target group for the ALB. A target group routes requests 
 # to one or more registered targets. In this case, the target is an instance
@@ -111,6 +111,9 @@ variable "vpc_id" {
 variable "public_subnet_ids" {
   description = "Public subnet IDs"
   type        = list(string)
+}
+output "alb_arn" {
+  value = aws_lb.web.arn
 }
 output "alb_sg_id" {
   value = aws_security_group.alb_sg.id
