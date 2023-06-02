@@ -51,5 +51,5 @@ output "certificate_validation_status"  {
   value = aws_acm_certificate_validation.cert_validation.validation_status
 }
 output "certificate_arn" {
-    var.certificate_arn
+  value = var.certificate_arn
 }
