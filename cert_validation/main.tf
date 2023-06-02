@@ -35,3 +35,6 @@ variable "certificate_arn" {
   description = "Certificate ARN"
   type        = string
 }
+variable "certificate_dvo" {
+  description = "Certificate DVO"
+}
