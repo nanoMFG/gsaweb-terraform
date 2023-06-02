@@ -37,4 +37,10 @@ variable "certificate_arn" {
 }
 variable "certificate_dvo" {
   description = "Certificate DVO"
+   type = list(object({
+    domain_name = string
+    resource_record_name = string
+    resource_record_type = string
+    resource_record_value = string
+  }))
 }
