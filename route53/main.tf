@@ -75,3 +75,7 @@ variable "alb_web_zone_id" {
   description = "ALB Zone ID"
   type        = string
 }
+output "route53_zone_id" {
+  description = "The ID of the existing Route53 hosted zone"
+  value       = data.aws_route53_zone.existing_zone.zone_id
+}
