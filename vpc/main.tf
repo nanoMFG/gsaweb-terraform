@@ -43,3 +43,6 @@ default = "178.0.0.0/16"
 output "vpc_id" {
   value = aws_vpc.app_vpc.id
 }
+output "public_rt_id" {
+  value = aws_route_table.public_rt.id
+}
