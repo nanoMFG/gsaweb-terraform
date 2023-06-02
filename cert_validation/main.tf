@@ -44,6 +44,6 @@ variable "certificate_dvo" {
     resource_record_value = string
   }))
 }
-output "certificate_validation = {
+output "certificate_validation  {
   value = aws_acm_certificate_validation.cert_validation
 }
