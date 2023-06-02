@@ -105,6 +105,10 @@ output "private_subnet_id" {
   description = "ID of the private subnet"
   value       = aws_subnet.private_subnet.id
 }
+output "nat_gateway_id" {
+  description = "ID of the NAT gateway"
+  value       = aws_nat_gateway.nat.id
+}
 
 # common vars
 # Defines a variable to be used as the name in the resource tags
@@ -126,3 +130,4 @@ variable "vpc_id" {
   description = "VPC ID"
   type        = string
 }
+

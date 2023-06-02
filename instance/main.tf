@@ -36,9 +36,9 @@ resource "aws_instance" "web" {
   ami           = var.instance_ami
   instance_type = var.instance_type
   iam_instance_profile   = aws_iam_instance_profile.ssm.name
-  vpc_security_group_ids = [aws_security_group.web_sg.id]
+  vpc_security_group_ids = [var.web_sg_id]
   subnet_id = var.private_subnet_id
-  depends_on = [aws_nat_gateway.nat]
+  depends_on = [var.nat_gateway_id]
   user_data = <<-EOF
               #!/bin/bash
               
@@ -78,5 +78,13 @@ variable "instance_ami" {
 }
 variable "private_subnet_id" {
   description = "The ID of the private subnet"
+  type        = string
+}
+variable "web_sg_id" {
+  description = "The ID of the security group"
+  type        = string
+}
+variable "nat_gateway_id" {
+  description = "The ID of the NAT gateway"
   type        = string
 }
