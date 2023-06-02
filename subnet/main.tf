@@ -19,7 +19,7 @@ resource "aws_subnet" "public_subnet" {
 resource "aws_route_table_association" "public_rt_asso" {
   count          = length(var.availability_zones)
   subnet_id      = element(aws_subnet.public_subnet.*.id, count.index)
-  route_table_id = aws_route_table.public_rt.id
+  route_table_id = var.public_rt_id
 }
 variable "availability_zones" {
   description = "List of availability zones to be used"
@@ -30,6 +30,10 @@ variable "public_subnet_cidrs" {
   description = "CIDR blocks for the public subnets"
   type        = list(string)
   default     = ["178.0.20.0/24", "178.0.30.0/24"]
+}
+variable "public_rt_id" {
+  description = "ID of the public route table"
+  type        = string
 }
 output "public_subnet_ids" {
   description = "IDs of the public subnets"
