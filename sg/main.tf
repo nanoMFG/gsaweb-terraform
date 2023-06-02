@@ -29,3 +29,30 @@ resource "aws_security_group" "web_sg" {
     Name = "${var.name}_${var.env}_web_sg"
   }
 }
+# Defines a variable to be used as the name in the resource tags
+variable "name" {
+  description = "Project name"
+  type        = string
+  default     = "gsaweb"
+}
+
+# Defines a variable to be used as the environment in the resource tags
+variable "env" {
+  description = "Project environment such as dev, qa or prod"
+  type        = string
+}
+
+# Defines a variable to specify the ID of the VPC in which the 
+# security group will be created
+variable "vpc_id" {
+  description = "VPC ID"
+  type        = string
+}
+
+# Outputs the ID of the web security group. This can be used 
+# as input to other resources that need to reference the security group
+output "web_sg_id" {
+  description = "Web server security group ID"
+  value       = aws_security_group.web_sg.id
+}
+
