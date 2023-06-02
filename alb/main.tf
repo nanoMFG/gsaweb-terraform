@@ -22,7 +22,7 @@ resource "aws_lb_listener" "front_end" {
   load_balancer_arn = aws_lb.web.arn
   port              = "443"
   protocol          = "HTTPS"
-  certificate_arn   = aws_acm_certificate.cert.arn
+  certificate_arn   = var.certificate_arn
 
   default_action {
     order            = 100
@@ -98,7 +98,10 @@ variable "env" {
   description = "Project environment such as dev, qa or prod"
   type        = string
 }
-
+variable "certificate_arn" {
+  description = "Certificate ARN"
+  type        = string
+}
 # Defines a variable to specify the ID of the VPC in which the 
 # security group will be created
 variable "vpc_id" {
