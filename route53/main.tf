@@ -58,11 +58,11 @@ variable "domain_name" {
   description = "Domain name"
   type        = string
 }
-# variable "route53_zone_id" {
-#   description = "The ID of the existing Route53 hosted zone"
-#   type        = string
-#   default     = "dummy"
-# }
+variable "route53_zone_id" {
+  description = "The ID of the existing Route53 hosted zone"
+  type        = string
+  default     = "dummy"
+}
 # variable "certificate_arn" {
 #   description = "Certificate ARN"
 #   type        = string
