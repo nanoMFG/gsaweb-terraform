@@ -35,10 +35,4 @@ output "certificate_dvo" {
 }
 output "certificate_domain_name" {
   value = aws_acm_certificate.cert.domain_name
-   type = list(object({
-    domain_name = string
-    resource_record_name = string
-    resource_record_type = string
-    resource_record_value = string
-  }))
 }
