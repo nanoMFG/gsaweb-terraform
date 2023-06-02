@@ -115,3 +115,9 @@ variable "public_subnet_ids" {
 output "alb_sg_id" {
   value = aws_security_group.alb_sg.id
 }
+output "alb_web_dns_name" {
+  value = aws_lb.web.dns_name
+}
+output "alb_web_zone_id" {
+  value = aws_lb.web.zone_id
+}
