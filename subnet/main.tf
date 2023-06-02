@@ -101,3 +101,24 @@ output "private_subnet_id" {
   description = "ID of the private subnet"
   value       = aws_subnet.private_subnet.id
 }
+
+# common vars
+# Defines a variable to be used as the name in the resource tags
+variable "name" {
+  description = "Project name"
+  type        = string
+  default     = "gsaweb"
+}
+
+# Defines a variable to be used as the environment in the resource tags
+variable "env" {
+  description = "Project environment such as dev, qa or prod"
+  type        = string
+}
+
+# Defines a variable to specify the ID of the VPC in which the 
+# security group will be created
+variable "vpc_id" {
+  description = "VPC ID"
+  type        = string
+}
