@@ -1,12 +1,12 @@
 # IAM instance profile for AWS Systems Manager (SSM), allowing SSM actions on instances.
 resource "aws_iam_instance_profile" "ssm" {
-  name = "ssm"
+  name = "${var.name}_${var.env}_ssm"
   role = aws_iam_role.ssm.name
 }
 
 # IAM role for SSM, with policy allowing EC2 instances to assume this role.
 resource "aws_iam_role" "ssm" {
-  name = "ssm"
+  name = "${var.name}_${var.env}_ssm"
 
   assume_role_policy = <<EOF
   {
