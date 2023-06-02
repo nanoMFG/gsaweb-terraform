@@ -1,10 +1,14 @@
+variable "vpc_id" {
+  description = "VPC ID"
+  type        = string
+}
 variable "name" {
   description = "Project name"
   type        = string
   default = "gsaweb"
 }
 variable "env" {
-  description = "Project environment such as dev or prod"
+  description = "Project environment such as dev, qa or prod"
   type        = string
 }
 variable "domain_name" {

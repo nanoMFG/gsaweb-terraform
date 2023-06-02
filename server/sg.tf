@@ -3,7 +3,7 @@
 resource "aws_security_group" "web_sg" {
   name        = "${var.name}_${var.env}_web_sg"
   description = "Security group for web server"
-  vpc_id      = aws_vpc.app_vpc.id
+  vpc_id      = var.vpc_id
 
   # Defines the inbound (ingress) rules for the security group.
   # Here it's allowing traffic from the Load Balancer security group (elb_sg).

@@ -4,7 +4,7 @@
 # For instances launched in these subnets, 'map_public_ip_on_launch' attribute is set to 'true' to enable automatic public IP assignment. 
 resource "aws_subnet" "public_subnet" {
   count             = length(var.availability_zones)
-  vpc_id            = aws_vpc.app_vpc.id
+  vpc_id            = var.vpc_id
   cidr_block        = element(var.public_subnet_cidrs, count.index)
   map_public_ip_on_launch = true
   availability_zone = element(var.availability_zones, count.index)

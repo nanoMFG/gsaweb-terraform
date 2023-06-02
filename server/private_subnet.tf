@@ -2,7 +2,7 @@
 # other resources will be located. The subnet's traffic will be routed through 
 # the NAT gateway to reach the internet.
 resource "aws_subnet" "private_subnet" {
-  vpc_id     = aws_vpc.app_vpc.id
+  vpc_id     = var.vpc_id
   cidr_block = var.private_subnet_cidr
 
   tags = {
@@ -36,7 +36,7 @@ resource "aws_nat_gateway" "nat" {
 # routed from the subnet to other networks. In this case, all traffic 
 # (0.0.0.0/0) is directed to the NAT gateway.
 resource "aws_route_table" "private_rt" {
-  vpc_id = aws_vpc.app_vpc.id
+  vpc_id = var.vpc_id
 
   route {
     cidr_block = "0.0.0.0/0"
