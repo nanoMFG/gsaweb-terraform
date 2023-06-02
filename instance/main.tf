@@ -88,7 +88,7 @@ variable "nat_gateway_id" {
   description = "The ID of the NAT gateway"
   type        = string
 }
-output "tartget_instance_id" {
+output "instance_id" {
   value = aws_instance.web.id
   description = "The ID of the instance"
 }
