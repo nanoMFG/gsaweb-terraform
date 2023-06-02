@@ -11,7 +11,7 @@ resource "aws_lb_listener" "front_end" {
   default_action {
     order            = 100
     type             = "forward"
-    target_group_arn = aws_lb_target_group.web.arn
+    target_group_arn = var.alb_target_group_arn
   }
 }
 variable "certificate_arn" {
