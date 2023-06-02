@@ -47,3 +47,9 @@ variable "certificate_dvo" {
 output "certificate_validation_id"  {
   value = aws_acm_certificate_validation.cert_validation.id
 }
+output "certificate_validation_status"  {
+  value = aws_acm_certificate_validation.cert_validation.validation_status
+}
+output "certificate_arn" {
+    var.certificate_arn
+}
