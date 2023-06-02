@@ -12,7 +12,7 @@ resource "aws_security_group" "web_sg" {
     from_port   = 0
     to_port     = 0
     protocol    = -1
-    security_groups = [aws_security_group.elb_sg.id]
+    security_groups = [var.alb_sg_id]
   }
 
   # Defines the outbound (egress) rules for the security group.
@@ -48,7 +48,10 @@ variable "vpc_id" {
   description = "VPC ID"
   type        = string
 }
-
+variable "alb_sg_id" {
+  description = "ALB security group ID"
+  type        = string
+}
 # Outputs the ID of the web security group. This can be used 
 # as input to other resources that need to reference the security group
 output "web_sg_id" {
