@@ -124,3 +124,6 @@ output "alb_web_dns_name" {
 output "alb_web_zone_id" {
   value = aws_lb.web.zone_id
 }
+output "alb_target_group_arn" {
+  value = aws_lb_target_group.web.arn
+}

@@ -20,3 +20,15 @@ variable "certificate_arn" {
 variable "alb_arn" {
   type = string
 }
+# Attaches the target (application instance) to the target group created above. 
+# The ALB will now send incoming traffic to this target.
+resource "aws_lb_target_group_attachment" "web" {
+  target_group_arn = var.alb_target_group_arn
+  target_id        = var.target_instance_id
+}
+variable "alb_target_group_arn" {
+  type = string
+}
+variable "target_instance_id" {
+  type = string
+}
