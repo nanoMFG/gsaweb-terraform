@@ -29,3 +29,13 @@ output "public_subnet_ids" {
   description = "IDs of the public subnets"
   value       = aws_subnet.public_subnet[*].id
 }
+
+output "certificate_arn" {
+  value = aws_acm_certificate.cert.arn
+}
+output "certificate_dvo" {
+   value = aws_acm_certificate.cert.domain_validation_options
+}
+output "certificate_domain_name" {
+  value = aws_acm_certificate.cert.domain_name
+}

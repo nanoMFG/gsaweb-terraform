@@ -8,6 +8,10 @@ variable "env" {
   description = "Project environment such as dev, qa or prod"
   type        = string
 }
+variable "domain_name" {
+  description = "Domain name"
+  type        = string
+}
 
 # Defines a variable for the VPC CIDR block
 variable "vpc_cidr" {
@@ -27,7 +31,3 @@ variable "public_subnet_cidrs" {
   type        = list(string)
   default     = ["178.0.20.0/24", "178.0.30.0/24"]
 }
-# variable "public_rt_id" {
-#   description = "ID of the public route table"
-#   type        = string
-# }
