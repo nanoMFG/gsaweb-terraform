@@ -4,7 +4,7 @@ resource "aws_lb" "web" {
   name                       = "${var.name}-${var.env}-alb"
   internal                   = false
   load_balancer_type         = "application"
-  security_groups            = [aws_security_group.alb_sg.id]
+  security_groups            = [var.alb_sg_id]
   subnets                    = var.public_subnet_ids
   enable_deletion_protection = false
 
@@ -88,11 +88,12 @@ variable "public_subnet_ids" {
   description = "Public subnet IDs"
   type        = list(string)
 }
+variable "alb_sg_id" {
+  description = "ALB security group ID"
+  type        = string
+}
 output "alb_arn" {
   value = aws_lb.web.arn
-}
-output "alb_sg_id" {
-  value = aws_security_group.alb_sg.id
 }
 output "alb_web_dns_name" {
   value = aws_lb.web.dns_name

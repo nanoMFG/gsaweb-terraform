@@ -4,6 +4,9 @@ output "web_sg_id" {
   description = "Web server security group ID"
   value       = aws_security_group.web_sg.id
 }
+output "alb_sg_id" {
+  value = aws_security_group.alb_sg.id
+}
 # Outputs the VPC ID
 output "vpc_id" {
   value = aws_vpc.app_vpc.id
