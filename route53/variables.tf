@@ -1,11 +1,9 @@
-
 # Defines a variable to be used as the name in the resource tags
 variable "name" {
   description = "Project name"
   type        = string
   default     = "gsaweb"
 }
-
 # Defines a variable to be used as the environment in the resource tags
 variable "env" {
   description = "Project environment such as dev, qa or prod"
