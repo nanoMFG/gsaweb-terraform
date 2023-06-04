@@ -4,7 +4,7 @@
 # For instances launched in these subnets, 'map_public_ip_on_launch' attribute is set to 'true' to enable automatic public IP assignment. 
 resource "aws_subnet" "public_subnet" {
   count             = length(var.availability_zones)
-  vpc_id            = var.vpc_id
+  vpc_id            = aws_vpc.app_vpc.id
   cidr_block        = element(var.public_subnet_cidrs, count.index)
   map_public_ip_on_launch = true
   availability_zone = element(var.availability_zones, count.index)
@@ -43,7 +43,7 @@ output "public_subnet_ids" {
 # other resources will be located. The subnet's traffic will be routed through 
 # the NAT gateway to reach the internet.
 resource "aws_subnet" "private_subnet" {
-  vpc_id     = var.vpc_id
+  vpc_id     = aws_vpc.app_vpc.id
   cidr_block = var.private_subnet_cidr
 
   tags = {
@@ -77,7 +77,7 @@ resource "aws_nat_gateway" "nat" {
 # routed from the subnet to other networks. In this case, all traffic 
 # (0.0.0.0/0) is directed to the NAT gateway.
 resource "aws_route_table" "private_rt" {
-  vpc_id = var.vpc_id
+  vpc_id = aws_vpc.app_vpc.id
 
   route {
     cidr_block = "0.0.0.0/0"
@@ -101,33 +101,6 @@ variable "private_subnet_cidr" {
   description = "CIDR block for the private subnet"
   default     = "178.0.10.0/24"
 }
-output "private_subnet_id" {
-  description = "ID of the private subnet"
-  value       = aws_subnet.private_subnet.id
-}
-output "nat_gateway_id" {
-  description = "ID of the NAT gateway"
-  value       = aws_nat_gateway.nat.id
-}
 
-# common vars
-# Defines a variable to be used as the name in the resource tags
-variable "name" {
-  description = "Project name"
-  type        = string
-  default     = "gsaweb"
-}
 
-# Defines a variable to be used as the environment in the resource tags
-variable "env" {
-  description = "Project environment such as dev, qa or prod"
-  type        = string
-}
-
-# Defines a variable to specify the ID of the VPC in which the 
-# security group will be created
-variable "vpc_id" {
-  description = "VPC ID"
-  type        = string
-}
 

@@ -32,31 +32,7 @@ resource "aws_route_table" "public_rt" {
   }
 }
 
-# Defines a variable to be used as the name in the resource tags
-variable "name" {
-  description = "Project name"
-  type        = string
-  default     = "gsaweb"
-}
 
-# Defines a variable to be used as the environment in the resource tags
-variable "env" {
-  description = "Project environment such as dev, qa or prod"
-  type        = string
-}
 
-# Defines a variable for the VPC CIDR block
-variable "vpc_cidr" {
-  default = "178.0.0.0/16"
-}
 
-# Outputs the VPC ID
-output "vpc_id" {
-  value = aws_vpc.app_vpc.id
-}
-
-# Outputs the public route table ID
-output "public_rt_id" {
-  value = aws_route_table.public_rt.id
-}
 

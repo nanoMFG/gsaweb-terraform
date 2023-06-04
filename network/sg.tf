@@ -3,7 +3,7 @@
 resource "aws_security_group" "web_sg" {
   name        = "${var.name}_${var.env}_web_sg"
   description = "Security group for web server"
-  vpc_id      = var.vpc_id
+  vpc_id      = aws_vpc.app_vpc.id
 
   # Defines the inbound (ingress) rules for the security group.
   # Here it's allowing traffic from the Load Balancer security group (elb_sg).
@@ -12,7 +12,7 @@ resource "aws_security_group" "web_sg" {
     from_port   = 0
     to_port     = 0
     protocol    = -1
-    security_groups = [var.alb_sg_id]
+    security_groups = [aws_security_group.alb_sg.id]
   }
 
   # Defines the outbound (egress) rules for the security group.
@@ -29,33 +29,38 @@ resource "aws_security_group" "web_sg" {
     Name = "${var.name}_${var.env}_web_sg"
   }
 }
-# Defines a variable to be used as the name in the resource tags
-variable "name" {
-  description = "Project name"
-  type        = string
-  default     = "gsaweb"
-}
 
-# Defines a variable to be used as the environment in the resource tags
-variable "env" {
-  description = "Project environment such as dev, qa or prod"
-  type        = string
-}
-
-# Defines a variable to specify the ID of the VPC in which the 
-# security group will be created
-variable "vpc_id" {
-  description = "VPC ID"
-  type        = string
-}
-variable "alb_sg_id" {
-  description = "ALB security group ID"
-  type        = string
-}
 # Outputs the ID of the web security group. This can be used 
 # as input to other resources that need to reference the security group
 output "web_sg_id" {
   description = "Web server security group ID"
   value       = aws_security_group.web_sg.id
+}
+
+# Creates a security group that allows inbound HTTPS (443) traffic 
+# to the load balancer from anywhere. It also allows all outbound 
+# traffic from the load balancer to anywhere.
+resource "aws_security_group" "alb_sg" {
+  name        = "${var.name}_${var.env}_alb_sg"
+  description = "Allow inbound traffic"
+  vpc_id      = aws_vpc.app_vpc.id
+
+  ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  
+  tags = {
+    Name = "${var.name}_${var.env}_alb_sg"
+  }
 }
 
