@@ -20,7 +20,7 @@ resource "aws_s3_bucket" "ansible_bucket" {
 resource "aws_s3_bucket_ownership_controls" "ansible_bucket_ownership_controls" {
   count = var.create_ansible_resources ? 1 : 0
 
-  bucket = aws_s3_bucket.ansible_bucket.id
+  bucket = aws_s3_bucket.ansible_bucket.*.id[0]
 
   rule {
     object_ownership = "ObjectWriter"
@@ -32,7 +32,8 @@ resource "aws_s3_bucket_ownership_controls" "ansible_bucket_ownership_controls" 
 resource "aws_s3_bucket_acl" "ansible_bucket_acl" {
   count = var.create_ansible_resources ? 1 : 0
 
-  bucket = aws_s3_bucket.ansible_bucket.id
+  bucket = aws_s3_bucket.ansible_bucket.*.id[0]
+  
   acl    = "private"
   
   # Ensures that the ownership controls are set before applying the ACL.
@@ -48,7 +49,7 @@ resource "aws_s3_bucket_acl" "ansible_bucket_acl" {
 resource "aws_s3_bucket_versioning" "ansible_bucket_versioning" {
   count = var.create_ansible_resources ? 1 : 0
 
-  bucket = aws_s3_bucket.ansible_bucket.id
+  bucket = aws_s3_bucket.ansible_bucket.*.id[0]
   
   versioning_configuration {
     status = "Enabled"
