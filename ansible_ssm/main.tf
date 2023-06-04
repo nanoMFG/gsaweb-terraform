@@ -78,5 +78,5 @@ variable "env" {
 
 output "ansible_bucket_name" {
   description = "The name of the bucket used by ansible"
-  value = aws_s3_bucket.ansible_bucket.id
+  value = aws_s3_bucket.ansible_bucket.*.id[0]
 }
