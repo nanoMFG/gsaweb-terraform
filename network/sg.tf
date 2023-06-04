@@ -30,13 +30,6 @@ resource "aws_security_group" "web_sg" {
   }
 }
 
-# Outputs the ID of the web security group. This can be used 
-# as input to other resources that need to reference the security group
-output "web_sg_id" {
-  description = "Web server security group ID"
-  value       = aws_security_group.web_sg.id
-}
-
 # Creates a security group that allows inbound HTTPS (443) traffic 
 # to the load balancer from anywhere. It also allows all outbound 
 # traffic from the load balancer to anywhere.

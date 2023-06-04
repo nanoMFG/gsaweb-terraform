@@ -10,9 +10,9 @@ output "vpc_id" {
 }
 
 # Outputs the public route table ID
-output "public_rt_id" {
-  value = aws_route_table.public_rt.id
-}
+# output "public_rt_id" {
+#   value = aws_route_table.public_rt.id
+# }
 
 # Outputs from subnets.tf:
 # Outputs the private route table ID
@@ -24,4 +24,8 @@ output "private_subnet_id" {
 output "nat_gateway_id" {
   description = "ID of the NAT gateway"
   value       = aws_nat_gateway.nat.id
+}
+output "public_subnet_ids" {
+  description = "IDs of the public subnets"
+  value       = aws_subnet.public_subnet[*].id
 }

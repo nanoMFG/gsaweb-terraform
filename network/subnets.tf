@@ -19,26 +19,9 @@ resource "aws_subnet" "public_subnet" {
 resource "aws_route_table_association" "public_rt_asso" {
   count          = length(var.availability_zones)
   subnet_id      = element(aws_subnet.public_subnet.*.id, count.index)
-  route_table_id = var.public_rt_id
+  route_table_id = aws_route_table.public_rt.id
 }
-variable "availability_zones" {
-  description = "List of availability zones to be used"
-  type        = list(string)
-  default     = ["us-east-2c", "us-east-2b"]
-}
-variable "public_subnet_cidrs" {
-  description = "CIDR blocks for the public subnets"
-  type        = list(string)
-  default     = ["178.0.20.0/24", "178.0.30.0/24"]
-}
-variable "public_rt_id" {
-  description = "ID of the public route table"
-  type        = string
-}
-output "public_subnet_ids" {
-  description = "IDs of the public subnets"
-  value       = aws_subnet.public_subnet[*].id
-}
+
 # Creates a private subnet within the VPC. This is where your instances and 
 # other resources will be located. The subnet's traffic will be routed through 
 # the NAT gateway to reach the internet.
@@ -97,10 +80,6 @@ resource "aws_route_table_association" "private_rt_asso" {
   route_table_id = aws_route_table.private_rt.id
 }
 
-variable "private_subnet_cidr" {
-  description = "CIDR block for the private subnet"
-  default     = "178.0.10.0/24"
-}
 
 
 
