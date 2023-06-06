@@ -4,6 +4,7 @@ output "web_sg_id" {
   description = "Web server security group ID"
   value       = aws_security_group.web_sg.id
 }
+# Security group id for the ALB
 output "alb_sg_id" {
   value = aws_security_group.alb_sg.id
 }
@@ -11,11 +12,6 @@ output "alb_sg_id" {
 output "vpc_id" {
   value = aws_vpc.app_vpc.id
 }
-
-# Outputs the public route table ID
-# output "public_rt_id" {
-#   value = aws_route_table.public_rt.id
-# }
 
 # Outputs from subnets.tf:
 # Outputs the private route table ID
@@ -41,4 +37,9 @@ output "certificate_dvo" {
 }
 output "certificate_domain_name" {
   value = aws_acm_certificate.cert.domain_name
+}
+# Output the available availability zones
+data "aws_availability_zones" "available" {}
+output "availability_zones" {
+  value = data.aws_availability_zones.available.names
 }
