@@ -9,9 +9,9 @@ resource "aws_route53_record" "www" {
   name    = var.env == "prod" ? var.domain_name : "${var.env}.${var.domain_name}"
   type    = "A"
 
-  latency_routing_policy {
-    region = var.region
-  }
+  # latency_routing_policy {
+  #   region = var.region
+  # }
 
   alias {
     name                   = var.alb_web_dns_name
