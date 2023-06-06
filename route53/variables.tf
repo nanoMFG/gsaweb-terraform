@@ -13,6 +13,10 @@ variable "domain_name" {
   description = "Domain name"
   type        = string
 }
+variable "region" {
+  description = "AWS region"
+  type        = string
+}
 variable "route53_zone_id" {
   description = "The ID of the existing Route53 hosted zone"
   type        = string
