@@ -35,32 +35,6 @@ resource "aws_lb_target_group" "web" {
   }
 }
 
-# # Creates a security group that allows inbound HTTPS (443) traffic 
-# # to the load balancer from anywhere. It also allows all outbound 
-# # traffic from the load balancer to anywhere.
-# resource "aws_security_group" "alb_sg" {
-#   name        = "${var.name}_${var.env}_alb_sg"
-#   description = "Allow inbound traffic"
-#   vpc_id      = var.vpc_id
-
-#   ingress {
-#     from_port   = 443
-#     to_port     = 443
-#     protocol    = "tcp"
-#     cidr_blocks = ["0.0.0.0/0"]
-#   }
-
-#   egress {
-#     from_port   = 0
-#     to_port     = 0
-#     protocol    = "-1"
-#     cidr_blocks = ["0.0.0.0/0"]
-#   }
-  
-#   tags = {
-#     Name = "${var.name}_${var.env}_alb_sg"
-#   }
-# }
 # common vars
 # Defines a variable to be used as the name in the resource tags
 variable "name" {

@@ -17,15 +17,16 @@ variable "domain_name" {
 variable "vpc_cidr" {
   default = "178.0.0.0/16"
 }
+# priviate subnet cidr block for use the (ec2) instance module
 variable "private_subnet_cidr" {
   description = "CIDR block for the private subnet"
   default     = "178.0.10.0/24"
 }
-variable "availability_zones" {
-  description = "List of availability zones to be used"
-  type        = list(string)
-  default     = ["us-east-2c", "us-east-2b"]
-}
+# variable "availability_zones" {
+#   description = "List of availability zones to be used"
+#   type        = list(string)
+#   default     = ["us-east-2c", "us-east-2b"]
+# }
 variable "public_subnet_cidrs" {
   description = "CIDR blocks for the public subnets"
   type        = list(string)

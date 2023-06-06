@@ -28,6 +28,10 @@ output "public_subnet_ids" {
   description = "IDs of the public subnets"
   value       = aws_subnet.public_subnet[*].id
 }
+output "availability_zones_used" {
+  description = "List of availability zones used for the public subnets"
+  value       = [for s in aws_subnet.public_subnet : s.availability_zone]
+}
 
 output "certificate_arn" {
   value = aws_acm_certificate.cert.arn
@@ -37,9 +41,4 @@ output "certificate_dvo" {
 }
 output "certificate_domain_name" {
   value = aws_acm_certificate.cert.domain_name
-}
-# Output the available availability zones
-data "aws_availability_zones" "available" {}
-output "availability_zones" {
-  value = data.aws_availability_zones.available.names
 }
