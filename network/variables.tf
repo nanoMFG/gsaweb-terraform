@@ -27,6 +27,16 @@ variable "private_subnet_cidr" {
 #   type        = list(string)
 #   default     = ["us-east-2c", "us-east-2b"]
 # }
+
+# This variable represents the CIDR blocks that will be assigned to the public subnets in the VPC.
+# The number of CIDR blocks provided should correspond to the desired number of availability zones for the ALB. 
+# The module will create one subnet per CIDR block provided. 
+
+# The actual assignment of availability zones for the ALB and public subnets is done dynamically and will 
+# select from the available zones in the region, in reverse order. 
+
+# If you want to utilize more availability zones, add more CIDR blocks to this list. Each CIDR block should 
+# be a valid subnet range and not overlap with any other subnet ranges in the VPC.
 variable "public_subnet_cidrs" {
   description = "CIDR blocks for the public subnets"
   type        = list(string)
