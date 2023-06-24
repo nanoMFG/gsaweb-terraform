@@ -92,3 +92,7 @@ output "instance_id" {
   value = aws_instance.web.id
   description = "The ID of the instance"
 }
+output "instance_name" {
+  value = aws_instance.web.tags.Name
+  description = "The name of the instance"
+}
