@@ -4,6 +4,7 @@ resource "aws_vpc" "app_vpc" {
 
   tags = {
     Name = "${var.name}_${var.env}_app-vpc"
+    Environment = var.env
   }
 }
 
@@ -13,6 +14,7 @@ resource "aws_internet_gateway" "igw" {
 
   tags = {
     Name = "${var.name}_${var.env}_vpc_igw"
+    Environment = var.env
   }
 }
 
@@ -29,6 +31,7 @@ resource "aws_route_table" "public_rt" {
 
   tags = {
     Name = "${var.name}_${var.env}_public_rt"
+    Environment = var.env
   }
 }
 

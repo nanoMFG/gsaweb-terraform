@@ -27,6 +27,7 @@ resource "aws_security_group" "web_sg" {
   # Assigns tags to the security group, which can be useful for organization and tracking costs.
   tags = {
     Name = "${var.name}_${var.env}_web_sg"
+    Environment = var.env
   }
 }
 
@@ -54,6 +55,7 @@ resource "aws_security_group" "alb_sg" {
   
   tags = {
     Name = "${var.name}_${var.env}_alb_sg"
+    Environment = var.env
   }
 }
 

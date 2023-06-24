@@ -14,6 +14,7 @@ resource "aws_subnet" "public_subnet" {
   availability_zone = element(reverse(data.aws_availability_zones.available.names), count.index)
   tags = {
     Name = "${var.name}_${var.env}_public-subnet-${count.index}"
+    Environment = var.env
   }
 }
 
@@ -35,6 +36,7 @@ resource "aws_subnet" "private_subnet" {
 
   tags = {
     Name = "${var.name}_${var.env}_private_subnet"
+    Environment = var.env
   }
 }
 
@@ -45,6 +47,7 @@ resource "aws_eip" "nat_eip" {
 
   tags = {
     Name = "${var.name}_${var.env}_nat_eip"
+    Environment = var.env
   }
 }
 
@@ -57,6 +60,7 @@ resource "aws_nat_gateway" "nat" {
 
   tags = {
     Name = "${var.name}_${var.env}_nat"
+    Environment = var.env
   }
 }
 
@@ -73,6 +77,7 @@ resource "aws_route_table" "private_rt" {
 
   tags = {
     Name = "${var.name}_${var.env}_private_rt"
+    Environment = var.env
   }
 }
 

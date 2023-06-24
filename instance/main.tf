@@ -51,10 +51,13 @@ resource "aws_instance" "web" {
 
    tags = {
     Name = "${var.name}_${var.env}_web_instance"
+    Environment = var.env
   }
 
   volume_tags = {
     Name = "${var.name}_${var.env}_web_instance"
+    Environment = var.env
+
   } 
 
 }
